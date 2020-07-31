@@ -47,7 +47,9 @@ public class CompanyServiceImpl implements CompanyService{
     public Company updateCompanyByID(Integer id, Company newCompany) {
         Company company = this.findById(id);
         if (company != null) {
-            BeanUtils.copyProperties(newCompany, company);
+            company.setEmployees(newCompany.getEmployees());
+            company.setCompanyName(newCompany.getCompanyName());
+            company.setEmployeeNumber(newCompany.getEmployeeNumber());
             return repository.save(company);
         } else {
             return null;

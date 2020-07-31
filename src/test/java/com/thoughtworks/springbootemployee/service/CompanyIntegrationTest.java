@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,7 +29,10 @@ public class CompanyIntegrationTest {
     private CompanyRepository companyRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
-
+    @AfterEach
+    void tearDown() {
+        companyRepository.deleteAll();
+    }
     @Test
     void should_return_companies_when_find_all_companies_given_null() throws Exception {
         //given
@@ -145,7 +149,7 @@ public class CompanyIntegrationTest {
         //when then
         mockMvc.perform(post("/companies")
                 .contentType(MediaType.APPLICATION_JSON).content(savedCompany))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.companyName").value("baidu"))
                 .andExpect(jsonPath("$.employeeNumber").value(1))
@@ -169,6 +173,7 @@ public class CompanyIntegrationTest {
         Company savedCompany = companyRepository.save(company);
 
         String updatedCompany = "{\n" +
+                "        \"Id\": \"" + savedCompany.getId() + "\",\n" +
                 "        \"companyName\": \"baidu\",\n" +
                 "        \"employeeNumber\": 1,\n" +
                 "        \"employees\": [\n" +

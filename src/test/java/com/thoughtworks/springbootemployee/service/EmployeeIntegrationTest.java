@@ -93,7 +93,7 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
-    void should_return_employee_when_find_employees_by_gender_given_gender() throws Exception {
+    void should_return_employee_when_find_employees_by_gender_given_gender_is_male() throws Exception {
         Employee employeeA = new Employee(1, 28, "male", "Draymond1", 1000);
         Employee employeeB = new Employee(2, 28, "female", "Draymond2", 1020);
         List<Employee> employees = Arrays.asList(employeeA, employeeB);

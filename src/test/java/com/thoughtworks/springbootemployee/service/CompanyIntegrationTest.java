@@ -37,7 +37,8 @@ public class CompanyIntegrationTest {
                 new Employee(2, 28, "male", "OOCL2", 1000),
                 new Employee(3, 28, "male", "OOCL3", 1000)
         );
-        Company company = new Company(1,
+        Company company = new Company(
+                1,
                 "OOCL",
                 1,
                 employees
@@ -63,7 +64,8 @@ public class CompanyIntegrationTest {
                 new Employee(2, 28, "male", "OOCL2", 1000),
                 new Employee(3, 28, "male", "OOCL3", 1000)
         );
-        Company company = new Company(1,
+        Company company = new Company(
+                1,
                 "OOCL",
                 1,
                 employees
@@ -88,7 +90,8 @@ public class CompanyIntegrationTest {
                 new Employee(2, 28, "male", "OOCL2", 1000),
                 new Employee(3, 28, "male", "OOCL3", 1000)
         );
-        Company company = new Company(1,
+        Company company = new Company(
+                1,
                 "OOCL",
                 1,
                 employees
@@ -111,7 +114,8 @@ public class CompanyIntegrationTest {
                 new Employee(2, 28, "male", "OOCL2", 1000),
                 new Employee(3, 28, "male", "OOCL3", 1000)
         );
-        Company company = new Company(1,
+        Company company = new Company(
+                1,
                 "OOCL",
                 1,
                 employees
@@ -156,7 +160,8 @@ public class CompanyIntegrationTest {
                 new Employee(2, 28, "male", "OOCL2", 1000),
                 new Employee(3, 28, "male", "OOCL3", 1000)
         );
-        Company company = new Company(1,
+        Company company = new Company(
+                1,
                 "OOCL",
                 1,
                 employees
@@ -190,7 +195,8 @@ public class CompanyIntegrationTest {
                 new Employee(2, 28, "male", "OOCL2", 1000),
                 new Employee(3, 28, "male", "OOCL3", 1000)
         );
-        Company company = new Company(1,
+        Company company = new Company(
+                1,
                 "OOCL",
                 1,
                 employees

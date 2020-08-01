@@ -30,8 +30,12 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company findById(Integer id) {
-        return repository.findById(id).orElse(null);
+    public Company findById(Integer id) throws NoSuchDataException {
+        Company company = repository.findById(id).orElse(null);
+        if (company == null) {
+            throw new NoSuchDataException();
+        }
+        return company;
     }
 
     @Override
@@ -62,8 +66,11 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company updateCompanyByID(Integer id, Company newCompany) throws IllegalOperationException {
+    public Company updateCompanyByID(Integer id, Company newCompany) throws IllegalOperationException, NoSuchDataException {
         Company company = this.findById(id);
+        if(id != newCompany.getId()) {
+            throw new IllegalOperationException();
+        }
         if (company != null) {
             company.setEmployees(newCompany.getEmployees());
             company.setCompanyName(newCompany.getCompanyName());
@@ -75,7 +82,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Boolean deleteCompanyByID(Integer id) throws IllegalOperationException {
+    public Boolean deleteCompanyByID(Integer id) throws IllegalOperationException, NoSuchDataException {
         Company company = this.findById(id);
         if (company != null) {
             repository.deleteById(id);

@@ -12,7 +12,7 @@ public interface CompanyService {
 
     List<Company> getCompanyList() throws NoSuchDataException;
 
-    Company findById(Integer id);
+    Company findById(Integer id) throws NoSuchDataException;
 
     List<Employee> findEmployeesByCompanyId(Integer id) throws NoSuchDataException;
 
@@ -20,7 +20,7 @@ public interface CompanyService {
 
     Company addCompany(Company company) throws IllegalOperationException;
 
-    Company updateCompanyByID(Integer id, Company newCompany) throws IllegalOperationException;
+    Company updateCompanyByID(Integer id, Company newCompany) throws IllegalOperationException, NoSuchDataException;
 
-    Boolean deleteCompanyByID(Integer id) throws IllegalOperationException;
+    Boolean deleteCompanyByID(Integer id) throws IllegalOperationException, NoSuchDataException;
 }

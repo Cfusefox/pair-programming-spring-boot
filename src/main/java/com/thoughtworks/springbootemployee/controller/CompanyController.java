@@ -99,7 +99,7 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public Company getCompaniesById(@PathVariable int id) {
+    public Company getCompaniesById(@PathVariable int id) throws NoSuchDataException {
         return companyService.findById(id);
     }
 
@@ -120,12 +120,12 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public Company updateCompanyByID(@PathVariable int id, @RequestBody Company newCompany) throws IllegalOperationException {
+    public Company updateCompanyByID(@PathVariable int id, @RequestBody Company newCompany) throws IllegalOperationException, NoSuchDataException {
         return companyService.updateCompanyByID(id,newCompany);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAllEmployeesOfTheCompanyByID(@PathVariable int id) throws IllegalOperationException {
+    public void deleteAllEmployeesOfTheCompanyByID(@PathVariable int id) throws IllegalOperationException, NoSuchDataException {
         companyService.deleteCompanyByID(id);
     }
 }

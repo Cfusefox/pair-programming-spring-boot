@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -63,7 +65,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_company_when_get_given_companyId() {
+    void should_return_company_when_get_given_companyId() throws NoSuchDataException {
         //given
         Integer id = 1;
         when(repository.findById(id)).thenReturn(java.util.Optional.of(new Company(1,
@@ -153,7 +155,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_updated_company_when_update_company_given_company() throws IllegalOperationException {
+    void should_return_updated_company_when_update_company_given_company() throws IllegalOperationException, NoSuchDataException {
         //given
         Company company = new Company(1,
                 "OOCL",
@@ -183,7 +185,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_deleted_company_when_delete_company_given_company_id() throws IllegalOperationException {
+    void should_return_deleted_company_when_delete_company_given_company_id() throws IllegalOperationException, NoSuchDataException {
         //given
         Company company = new Company(1,
                 "OOCL",
@@ -204,4 +206,19 @@ public class CompanyServiceTest {
         //then
         Mockito.verify(mockCompanyReposition).deleteById(1);
     }
+
+    @Test
+    void should_return_true_when_find_company_by_id_given_incorrect_id() {
+        //given
+        CompanyService companyService = new CompanyServiceImpl(repository);
+
+        //when
+        Throwable exception = assertThrows(NoSuchDataException.class,
+        () -> companyService.findById(0));
+
+        //then
+        assertEquals(NoSuchDataException.class, exception.getClass());
+    }
+
+
 }

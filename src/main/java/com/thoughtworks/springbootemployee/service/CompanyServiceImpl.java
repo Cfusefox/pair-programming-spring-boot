@@ -2,10 +2,11 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.Exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
+import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.List;
 @Service
 public class CompanyServiceImpl implements CompanyService {
     private CompanyRepository repository;
+    private CompanyMapper companyMapper = new CompanyMapper();
 
     public CompanyServiceImpl(CompanyRepository repository) {
         this.repository = repository;
@@ -30,12 +32,12 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company findById(Integer id) throws NoSuchDataException {
+    public CompanyResponse findById(Integer id) throws NoSuchDataException {
         Company company = repository.findById(id).orElse(null);
         if (company == null) {
             throw new NoSuchDataException();
         }
-        return company;
+        return companyMapper.mapCompanyResponse(company);
     }
 
     @Override
@@ -57,25 +59,25 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company addCompany(Company company) throws IllegalOperationException {
+    public CompanyResponse addCompany(Company company) throws IllegalOperationException {
         Company addedCompany = repository.save(company);
         if(addedCompany.getId() == 0) {
             throw new IllegalOperationException();
         }
-        return addedCompany;
+        return companyMapper.mapCompanyResponse(addedCompany);
     }
 
     @Override
-    public Company updateCompanyByID(Integer id, Company newCompany) throws IllegalOperationException, NoSuchDataException {
+    public CompanyResponse updateCompanyByID(Integer id, Company newCompany) throws IllegalOperationException, NoSuchDataException {
         if(id != newCompany.getId()) {
             throw new IllegalOperationException();
         }
-        Company company = this.findById(id);
+        CompanyResponse company = this.findById(id);
         if (company != null) {
             company.setEmployees(newCompany.getEmployees());
             company.setCompanyName(newCompany.getCompanyName());
             company.setEmployeeNumber(newCompany.getEmployeeNumber());
-            return repository.save(company);
+            return company;
         } else {
             throw new IllegalOperationException();
         }
@@ -83,7 +85,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Boolean deleteCompanyByID(Integer id) throws IllegalOperationException, NoSuchDataException {
-        Company company = this.findById(id);
+        CompanyResponse company = this.findById(id);
         if (company != null) {
             repository.deleteById(id);
             return true;

@@ -2,6 +2,8 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.Exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
+import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -24,6 +26,7 @@ import static org.mockito.Mockito.when;
 public class CompanyServiceTest {
     private CompanyRepository repository = mock(CompanyRepository.class);
     private CompanyServiceImpl companyService = new CompanyServiceImpl(repository);
+    private CompanyMapper companyMapper = new CompanyMapper();
     @Test
     void should_return_companies_when_get() throws NoSuchDataException {
         //given
@@ -78,7 +81,7 @@ public class CompanyServiceTest {
                 )
         )));
         //when
-        Company company = companyService.findById(id);
+        CompanyResponse company = companyService.findById(id);
         //then
         Assertions.assertEquals(id, company.getId());
     }
@@ -149,7 +152,7 @@ public class CompanyServiceTest {
         );
         when(repository.save(company)).thenReturn(company);
         //when
-        Company returnValue = companyService.addCompany(company);
+        CompanyResponse returnValue = companyService.addCompany(company);
         //then
         Assertions.assertEquals(company.getId(), returnValue.getId());
     }
@@ -178,10 +181,10 @@ public class CompanyServiceTest {
         when(repository.findById(1)).thenReturn(java.util.Optional.of(company));
         when(repository.save(company)).thenReturn(company);
         //when
-        Company returnValue = companyService.updateCompanyByID(1, updateCompany);
+        CompanyResponse returnValue = companyService.updateCompanyByID(1, updateCompany);
         //then
         Assertions.assertEquals(1, returnValue.getId());
-        Assertions.assertEquals(company, returnValue);
+        Assertions.assertEquals(company.getId(), returnValue.getId());
     }
 
     @Test

@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.Exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
+import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.data.domain.Page;
@@ -12,15 +13,15 @@ public interface CompanyService {
 
     List<Company> getCompanyList() throws NoSuchDataException;
 
-    Company findById(Integer id) throws NoSuchDataException;
+    CompanyResponse findById(Integer id) throws NoSuchDataException;
 
     List<Employee> findEmployeesByCompanyId(Integer id) throws NoSuchDataException;
 
     Page<Company> getCompaniesByPage(int page, int pageSize) throws NoSuchDataException;
 
-    Company addCompany(Company company) throws IllegalOperationException;
+    CompanyResponse addCompany(Company company) throws IllegalOperationException;
 
-    Company updateCompanyByID(Integer id, Company newCompany) throws IllegalOperationException, NoSuchDataException;
+    CompanyResponse updateCompanyByID(Integer id, Company newCompany) throws IllegalOperationException, NoSuchDataException;
 
     Boolean deleteCompanyByID(Integer id) throws IllegalOperationException, NoSuchDataException;
 }

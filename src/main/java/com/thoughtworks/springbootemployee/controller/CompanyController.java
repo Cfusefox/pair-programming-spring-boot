@@ -2,6 +2,9 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.Exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
+import com.thoughtworks.springbootemployee.dto.CompanyRequest;
+import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyServiceImpl;
@@ -20,111 +23,46 @@ public class CompanyController {
     @Autowired
     private CompanyServiceImpl companyService;
 
-    private List<Company> initCompanies() {
-        List<Company> companies = new ArrayList<>();
-        companies.add(
-                new Company(1,
-                        "OOCL",
-                        1,
-                        Arrays.asList(
-                                new Employee(1, 28, "male", "OOCL1", 1000),
-                                new Employee(2, 28, "male", "OOCL2", 1000),
-                                new Employee(3, 28, "male", "OOCL3", 1000)
-                        )
-                )
-        );
-        companies.add(
-                new Company(2,
-                        "CargoSmart",
-                        1,
-                        Arrays.asList(
-                                new Employee(1, 28, "male", "CargoSmart1", 1000),
-                                new Employee(2, 28, "male", "CargoSmart2", 1000),
-                                new Employee(3, 28, "male", "CargoSmart3", 1000)
-                        )
-                )
-        );
-        companies.add(
-                new Company(3,
-                        "KFC",
-                        1,
-                        Arrays.asList(
-                                new Employee(1, 28, "male", "KFC1", 1000),
-                                new Employee(2, 28, "male", "KFC2", 1000),
-                                new Employee(3, 28, "male", "KFC3", 1000)
-                        )
-                )
-        );
-        companies.add(
-                new Company(4,
-                        "MC",
-                        1,
-                        Arrays.asList(
-                                new Employee(1, 28, "male", "MC1", 1000),
-                                new Employee(2, 28, "male", "MC2", 1000),
-                                new Employee(3, 28, "male", "MC3", 1000)
-                        )
-                )
-        );
-        companies.add(
-                new Company(5,
-                        "alibaba",
-                        1,
-                        Arrays.asList(
-                                new Employee(1, 28, "male", "alibaba1", 1000),
-                                new Employee(2, 28, "male", "alibaba2", 1000),
-                                new Employee(3, 28, "male", "alibaba3", 1000)
-                        )
-                )
-        );
-        companies.add(
-                new Company(6,
-                        "Tencent",
-                        1,
-                        Arrays.asList(
-                                new Employee(1, 28, "male", "Tencent1", 1000),
-                                new Employee(2, 28, "male", "Tencent2", 1000),
-                                new Employee(3, 28, "male", "Tencent3", 1000)
-                        )
-                )
-        );
-
-
-        return companies;
-    }
+    private CompanyMapper companyMapper;
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<Company> getAllCompanies() throws NoSuchDataException {
         return companyService.getCompanyList();
     }
 
     @GetMapping("/{id}")
-    public Company getCompaniesById(@PathVariable int id) throws NoSuchDataException {
+    @ResponseStatus(HttpStatus.OK)
+    public CompanyResponse getCompaniesById(@PathVariable int id) throws NoSuchDataException {
         return companyService.findById(id);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}/employees")
     public List<Employee> getEmployeesByCompanyId(@PathVariable int id) throws NoSuchDataException {
         return companyService.findEmployeesByCompanyId(id);
     }
 
     @GetMapping(params = {"page", "pageSize"})
+    @ResponseStatus(HttpStatus.OK)
     public Page<Company> getCompaniesByPage(int page, int pageSize) throws NoSuchDataException {
         return companyService.getCompaniesByPage(page, pageSize);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Company addCompany(@RequestBody Company newCompany) throws IllegalOperationException {
-        return companyService.addCompany(newCompany);
+    public CompanyResponse addCompany(@RequestBody CompanyRequest newCompany) throws IllegalOperationException {
+        return companyService.addCompany(companyMapper.mapCompany(newCompany));
     }
 
     @PutMapping("/{id}")
-    public Company updateCompanyByID(@PathVariable int id, @RequestBody Company newCompany) throws IllegalOperationException, NoSuchDataException {
-        return companyService.updateCompanyByID(id,newCompany);
+    @ResponseStatus(HttpStatus.OK)
+    public CompanyResponse updateCompanyByID(@PathVariable int id, @RequestBody CompanyRequest newCompany) throws IllegalOperationException, NoSuchDataException {
+        return companyService.updateCompanyByID(id,companyMapper.mapCompany(newCompany));
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public void deleteAllEmployeesOfTheCompanyByID(@PathVariable int id) throws IllegalOperationException, NoSuchDataException {
         companyService.deleteCompanyByID(id);
     }

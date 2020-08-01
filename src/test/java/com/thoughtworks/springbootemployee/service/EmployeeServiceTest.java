@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
@@ -44,7 +45,7 @@ public class EmployeeServiceTest {
         Integer id = 1;
         when(repository.findById(id)).thenReturn(java.util.Optional.of(new Employee(1, 28, "male", "Draymond1", 1000)));
         //when
-        Employee employee = employeeService.getEmployeeById(id);
+        EmployeeResponse employee = employeeService.getEmployeeById(id);
         //then
         Assertions.assertEquals(id, employee.getId());
     }
@@ -91,7 +92,7 @@ public class EmployeeServiceTest {
         Employee employee = new Employee(6, 28, "male", "Draymond6", 20);
         when(repository.save(employee)).thenReturn(employee);
         //when
-        Employee returnValue = employeeService.addEmployee(employee);
+        EmployeeResponse returnValue = employeeService.addEmployee(employee);
         //then
         Assertions.assertEquals(employee.getId(), returnValue.getId());
     }
@@ -103,7 +104,7 @@ public class EmployeeServiceTest {
         when(repository.save(employee)).thenReturn(employee);
         given(repository.findById(6)).willReturn(java.util.Optional.of(employee));
         //when
-        Employee returnValue = employeeService.updateEmployeeByID(6, employee);
+        EmployeeResponse returnValue = employeeService.updateEmployeeByID(6, employee);
         //then
         Assertions.assertEquals("male", returnValue.getGender());
     }

@@ -1,6 +1,9 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
+import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
+import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.data.domain.Page;
@@ -14,6 +17,7 @@ import java.util.List;
 @RequestMapping("/employees")
 public class EmployeeController {
     private final EmployeeService employeeService;
+    private EmployeeMapper employeeMapper = new EmployeeMapper();
 
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -37,7 +41,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployeeByID(@PathVariable int id) throws NoSuchDataException {
+    public EmployeeResponse getEmployeeByID(@PathVariable int id) throws NoSuchDataException {
         return employeeService.getEmployeeById(id);
     }
 
@@ -53,13 +57,13 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee addEmployee(@RequestBody Employee newEmployee) {
-        return employeeService.addEmployee(newEmployee);
+    public EmployeeResponse addEmployee(@RequestBody EmployeeRequest newEmployee) {
+        return employeeService.addEmployee(employeeMapper.mapEmployee(newEmployee));
     }
 
     @PutMapping("/{id}")
-    public Employee updateEmployeeByID(@PathVariable int id, @RequestBody Employee newEmployee) throws NoSuchDataException {
-        return employeeService.updateEmployeeByID(id, newEmployee);
+    public EmployeeResponse updateEmployeeByID(@PathVariable int id, @RequestBody EmployeeRequest newEmployee) throws NoSuchDataException {
+        return employeeService.updateEmployeeByID(id, employeeMapper.mapEmployee(newEmployee));
     }
 
     @DeleteMapping("/{id}")

@@ -15,6 +15,10 @@ public class EmployeeRequest {
         this.salary = salary;
     }
 
+    public EmployeeRequest() {
+
+    }
+
     public Integer getId() {
         return id;
     }

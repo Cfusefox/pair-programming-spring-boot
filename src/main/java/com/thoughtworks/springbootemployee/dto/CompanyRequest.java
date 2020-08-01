@@ -17,6 +17,9 @@ public class CompanyRequest {
         this.employees = employees;
     }
 
+    public CompanyRequest() {
+    }
+
     public int getId() {
         return id;
     }

@@ -23,7 +23,7 @@ public class CompanyController {
     @Autowired
     private CompanyServiceImpl companyService;
 
-    private CompanyMapper companyMapper;
+    private CompanyMapper companyMapper = new CompanyMapper();
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

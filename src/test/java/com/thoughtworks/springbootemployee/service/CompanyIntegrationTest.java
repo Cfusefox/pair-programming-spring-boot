@@ -174,7 +174,7 @@ public class CompanyIntegrationTest {
         Company savedCompany = companyRepository.save(company);
 
         String updatedCompany = "{\n" +
-                "        \"Id\": \"" + savedCompany.getId() + "\",\n" +
+                "        \"id\": \"" + savedCompany.getId() + "\",\n" +
                 "        \"companyName\": \"baidu\",\n" +
                 "        \"employeeNumber\": 1,\n" +
                 "        \"employees\": [\n" +

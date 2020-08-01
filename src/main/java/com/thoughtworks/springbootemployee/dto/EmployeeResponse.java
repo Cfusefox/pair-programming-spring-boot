@@ -6,13 +6,15 @@ public class EmployeeResponse {
     private String gender;
     private String name;
     private Integer salary;
+    private Integer companyId;
 
-    public EmployeeResponse(Integer id, Integer age, String gender, String name, Integer salary) {
+    public EmployeeResponse(Integer id, Integer age, String gender, String name, Integer salary, Integer companyId) {
         this.id = id;
         this.age = age;
         this.gender = gender;
         this.name = name;
         this.salary = salary;
+        this.companyId = companyId;
     }
 
     public EmployeeResponse() {

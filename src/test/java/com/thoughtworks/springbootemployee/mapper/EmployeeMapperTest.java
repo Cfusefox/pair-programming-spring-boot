@@ -19,7 +19,7 @@ public class EmployeeMapperTest {
     @Test
     void should_return_company_when_map_company_given_company_request() {
         //given
-        EmployeeRequest employeeRequest = new EmployeeRequest(1, 18, "female", "York", 1000);
+        EmployeeRequest employeeRequest = new EmployeeRequest(1, 18, "female", "York", 1000, 1);
 
         //when
         Employee employee = employeeMapper.mapEmployee(employeeRequest);
@@ -35,7 +35,7 @@ public class EmployeeMapperTest {
     @Test
     void should_return_company_response_when_map_company_response_given_company() {
         //given
-        Employee employee = new Employee(1, 18, "female", "York", 1000);
+        Employee employee = new Employee(1, 18, "female", "York", 1000, 1);
 
         //when
         EmployeeResponse employeeResponse = employeeMapper.mapEmployeeResponse(employee);

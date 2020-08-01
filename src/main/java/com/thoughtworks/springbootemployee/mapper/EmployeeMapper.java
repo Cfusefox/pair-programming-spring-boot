@@ -8,7 +8,11 @@ import org.springframework.beans.BeanUtils;
 public class EmployeeMapper {
     public Employee mapEmployee(EmployeeRequest employeeRequest) {
         Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeRequest, employee);
+        employee.setId(employeeRequest.getId());
+        employee.setName(employeeRequest.getName());
+        employee.setGender(employeeRequest.getGender());
+        employee.setAge(employeeRequest.getAge());
+        employee.setSalary(employeeRequest.getSalary());
         return employee;
     }
 

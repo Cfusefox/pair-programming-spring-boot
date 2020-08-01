@@ -3,5 +3,6 @@ create table employee (
 	age int,
 	gender varchar(25),
 	name varchar(25),
-	salary int
+	salary int,
+	companyId int
 )

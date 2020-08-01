@@ -6,17 +6,27 @@ public class EmployeeRequest {
     private String gender;
     private String name;
     private Integer salary;
+    private Integer companyId;
 
-    public EmployeeRequest(Integer id, Integer age, String gender, String name, Integer salary) {
+    public EmployeeRequest(Integer id, Integer age, String gender, String name, Integer salary, Integer companyId) {
         this.id = id;
         this.age = age;
         this.gender = gender;
         this.name = name;
         this.salary = salary;
+        this.companyId = companyId;
     }
 
     public EmployeeRequest() {
 
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
     public Integer getId() {

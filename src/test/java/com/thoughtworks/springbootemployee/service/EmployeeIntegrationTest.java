@@ -4,7 +4,6 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -41,7 +40,7 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employees_when_find_all_employees_given_nothing() throws Exception {
         //given
-        Employee employee = new Employee(1, 28, "male", "Draymond1", 1000);
+        Employee employee = new Employee(1, 28, "male", "Draymond1", 1000, 1);
         employeeRepository.save(employee);
 
         //when then
@@ -60,7 +59,7 @@ public class EmployeeIntegrationTest {
     void should_return_certain_employee_when_find_employee_by_id_given_employee_id() throws Exception {
         //given
         Integer id = 1;
-        Employee employee = new Employee(1, 28, "male", "Draymond1", 1000);
+        Employee employee = new Employee(1, 28, "male", "Draymond1", 1000, 1);
         Employee savedEmployee = employeeRepository.save(employee);
 
         //when then
@@ -77,8 +76,8 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employees_when_page_query_given_page_and_page_size() throws Exception {
         //given
-        Employee employeeA = new Employee(1, 28, "male", "Draymond1", 1000);
-        Employee employeeB = new Employee(2, 28, "male", "Draymond2", 1020);
+        Employee employeeA = new Employee(1, 28, "male", "Draymond1", 1000, 1);
+        Employee employeeB = new Employee(2, 28, "male", "Draymond2", 1020, 1);
         List<Employee> employees = Arrays.asList(employeeA, employeeB);
         Employee employee1 = employeeRepository.save(employeeA);
         Employee employee2 = employeeRepository.save(employeeB);
@@ -95,8 +94,8 @@ public class EmployeeIntegrationTest {
 
     @Test
     void should_return_employee_when_find_employees_by_gender_given_gender_is_male() throws Exception {
-        Employee employeeA = new Employee(1, 28, "male", "Draymond1", 1000);
-        Employee employeeB = new Employee(2, 28, "female", "Draymond2", 1020);
+        Employee employeeA = new Employee(1, 28, "male", "Draymond1", 1000, 1);
+        Employee employeeB = new Employee(2, 28, "female", "Draymond2", 1020, 1);
         List<Employee> employees = Arrays.asList(employeeA, employeeB);
         employeeRepository.save(employeeA);
         employeeRepository.save(employeeB);
@@ -114,11 +113,12 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_update_employee_when_add_employee_given_employee() throws Exception {
         String employeeInformation = "{\n" +
-                "    \"id\": 76,\n" +
+                "    \"id\": 5,\n" +
                 "    \"age\": 28,\n" +
-                "    \"gender\": \"male\",\n" +
-                "    \"name\": \"baidu1\",\n" +
-                "    \"salary\": 1000\n" +
+                "    \"gender\": \"female\",\n" +
+                "    \"name\": \"York\",\n" +
+                "    \"salary\": 1000,\n" +
+                "    \"companyId\": 76\n" +
                 "}";
 
         //when then
@@ -127,21 +127,22 @@ public class EmployeeIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.age").value(28))
-                .andExpect(jsonPath("$.gender").value("male"))
-                .andExpect(jsonPath("$.name").value("baidu1"))
+                .andExpect(jsonPath("$.gender").value("female"))
+                .andExpect(jsonPath("$.name").value("York"))
                 .andExpect(jsonPath("$.salary").value(1000));
     }
 
     @Test
     void should_return_updated_employee_when_update_employee_given_employee() throws Exception {
-        Employee employee = new Employee(1, 28, "male", "Draymond1", 1000);
+        Employee employee = new Employee(1, 28, "male", "Draymond1", 1000, 1);
         Employee saveEmployee = employeeRepository.save(employee);
         String employeeInformation = "{\n" +
                 "    \"id\": " + saveEmployee.getId() + ",\n" +
                 "    \"age\": 28,\n" +
-                "    \"gender\": \"male\",\n" +
-                "    \"name\": \"baidu12\",\n" +
-                "    \"salary\": 1000\n" +
+                "    \"gender\": \"female\",\n" +
+                "    \"name\": \"York\",\n" +
+                "    \"salary\": 1000,\n" +
+                "    \"companyId\": 76\n" +
                 "}";
 
         //when then
@@ -150,14 +151,14 @@ public class EmployeeIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.age").value(28))
-                .andExpect(jsonPath("$.gender").value("male"))
-                .andExpect(jsonPath("$.name").value("baidu12"))
+                .andExpect(jsonPath("$.gender").value("female"))
+                .andExpect(jsonPath("$.name").value("York"))
                 .andExpect(jsonPath("$.salary").value(1000));
     }
 
     @Test
     void should_return_boolean_when_delete_employee_by_id_given_id() throws Exception {
-        Employee employee = new Employee(1, 28, "male", "Draymond1", 1000);
+        Employee employee = new Employee(1, 28, "male", "Draymond1", 1000, 1);
         Employee saveEmployee = employeeRepository.save(employee);
 
         mockMvc.perform(delete("/employees/" + saveEmployee.getId()))

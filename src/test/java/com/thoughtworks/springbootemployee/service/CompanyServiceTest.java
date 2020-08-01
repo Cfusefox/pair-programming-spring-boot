@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -35,27 +36,27 @@ public class CompanyServiceTest {
                 "OOCL",
                 1,
                 Arrays.asList(
-                        new Employee(1, 28, "male", "OOCL1", 1000),
-                        new Employee(2, 28, "male", "OOCL2", 1000),
-                        new Employee(3, 28, "male", "OOCL3", 1000)
+                        new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                        new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                        new Employee(3, 28, "male", "OOCL3", 1000, 1)
                 )
         ));
         mockedCompanies.add(new Company(2,
                 "OOCL2",
                 1,
                 Arrays.asList(
-                        new Employee(1, 28, "male", "OOCL1", 1000),
-                        new Employee(2, 28, "male", "OOCL2", 1000),
-                        new Employee(3, 28, "male", "OOCL3", 1000)
+                        new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                        new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                        new Employee(3, 28, "male", "OOCL3", 1000, 1)
                 )
         ));
         mockedCompanies.add(new Company(3,
                 "OOCL3",
                 1,
                 Arrays.asList(
-                        new Employee(1, 28, "male", "OOCL1", 1000),
-                        new Employee(2, 28, "male", "OOCL2", 1000),
-                        new Employee(3, 28, "male", "OOCL3", 1000)
+                        new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                        new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                        new Employee(3, 28, "male", "OOCL3", 1000, 1)
                 )
         ));
         when(repository.findAll()).thenReturn(mockedCompanies);
@@ -71,13 +72,13 @@ public class CompanyServiceTest {
     void should_return_company_when_get_given_companyId() throws NoSuchDataException {
         //given
         Integer id = 1;
-        when(repository.findById(id)).thenReturn(java.util.Optional.of(new Company(1,
+        when(repository.findById(id)).thenReturn(Optional.of(new Company(1,
                 "OOCL",
                 1,
                 Arrays.asList(
-                        new Employee(1, 28, "male", "OOCL1", 1000),
-                        new Employee(2, 28, "male", "OOCL2", 1000),
-                        new Employee(3, 28, "male", "OOCL3", 1000)
+                        new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                        new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                        new Employee(3, 28, "male", "OOCL3", 1000, 1)
                 )
         )));
         //when
@@ -97,18 +98,18 @@ public class CompanyServiceTest {
                 "OOCL",
                 1,
                 Arrays.asList(
-                        new Employee(1, 28, "male", "OOCL1", 1000),
-                        new Employee(2, 28, "male", "OOCL2", 1000),
-                        new Employee(3, 28, "male", "OOCL3", 1000)
+                        new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                        new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                        new Employee(3, 28, "male", "OOCL3", 1000, 1)
                 )
         ));
         mockedCompanies.add(new Company(2,
                 "OOCL2",
                 1,
                 Arrays.asList(
-                        new Employee(1, 28, "male", "OOCL1", 1000),
-                        new Employee(2, 28, "male", "OOCL2", 1000),
-                        new Employee(3, 28, "male", "OOCL3", 1000)
+                        new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                        new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                        new Employee(3, 28, "male", "OOCL3", 1000, 1)
                 )
         ));
         when(repository.findAll(PageRequest.of(page, pageSize))).thenReturn(new PageImpl<>(mockedCompanies));
@@ -123,13 +124,13 @@ public class CompanyServiceTest {
     void should_return_employees_when_get_given_companyId() throws NoSuchDataException {
         //given
         Integer id = 1;
-        when(repository.findById(id)).thenReturn(java.util.Optional.of(new Company(1,
+        when(repository.findById(id)).thenReturn(Optional.of(new Company(1,
                 "OOCL",
                 1,
                 Arrays.asList(
-                        new Employee(1, 28, "male", "OOCL1", 1000),
-                        new Employee(2, 28, "male", "OOCL2", 1000),
-                        new Employee(3, 28, "male", "OOCL3", 1000)
+                        new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                        new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                        new Employee(3, 28, "male", "OOCL3", 1000, 1)
                 )
         )));
         //when
@@ -145,9 +146,9 @@ public class CompanyServiceTest {
                 "OOCL",
                 1,
                 Arrays.asList(
-                        new Employee(1, 28, "male", "OOCL1", 1000),
-                        new Employee(2, 28, "male", "OOCL2", 1000),
-                        new Employee(3, 28, "male", "OOCL3", 1000)
+                        new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                        new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                        new Employee(3, 28, "male", "OOCL3", 1000, 1)
                 )
         );
         when(repository.save(company)).thenReturn(company);
@@ -164,21 +165,21 @@ public class CompanyServiceTest {
                 "OOCL",
                 1,
                 Arrays.asList(
-                        new Employee(1, 28, "male", "OOCL1", 1000),
-                        new Employee(2, 28, "male", "OOCL2", 1000),
-                        new Employee(3, 28, "male", "OOCL3", 1000)
+                        new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                        new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                        new Employee(3, 28, "male", "OOCL3", 1000, 1)
                 )
         );
         Company updateCompany = new Company(1,
                 "OOIL",
                 20,
                 Arrays.asList(
-                        new Employee(1, 28, "male", "OOCL1", 1000),
-                        new Employee(2, 28, "male", "OOCL2", 1000),
-                        new Employee(3, 28, "male", "OOCL3", 1000)
+                        new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                        new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                        new Employee(3, 28, "male", "OOCL3", 1000, 1)
                 )
         );
-        when(repository.findById(1)).thenReturn(java.util.Optional.of(company));
+        when(repository.findById(1)).thenReturn(Optional.of(company));
         when(repository.save(company)).thenReturn(company);
         //when
         CompanyResponse returnValue = companyService.updateCompanyByID(1, updateCompany);
@@ -194,15 +195,15 @@ public class CompanyServiceTest {
                 "OOCL",
                 1,
                 Arrays.asList(
-                        new Employee(1, 28, "male", "OOCL1", 1000),
-                        new Employee(2, 28, "male", "OOCL2", 1000),
-                        new Employee(3, 28, "male", "OOCL3", 1000)
+                        new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                        new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                        new Employee(3, 28, "male", "OOCL3", 1000, 1)
                 )
         );
         //given
         CompanyRepository mockCompanyReposition = mock(CompanyRepository.class);
         CompanyServiceImpl companyService = new CompanyServiceImpl(mockCompanyReposition);
-        given(mockCompanyReposition.findById(1)).willReturn(java.util.Optional.of(company));
+        given(mockCompanyReposition.findById(1)).willReturn(Optional.of(company));
         Integer id = 1;
         //when
         companyService.deleteCompanyByID(id);
@@ -213,7 +214,7 @@ public class CompanyServiceTest {
     @Test
     void should_throw_exception_when_find_company_by_id_given_incorrect_id() {
         //given
-        CompanyService companyService = new CompanyServiceImpl(repository);
+        CompanyServiceImpl companyService = new CompanyServiceImpl(repository);
 
         //when
         Throwable exception = assertThrows(NoSuchDataException.class,
@@ -229,9 +230,9 @@ public class CompanyServiceTest {
                 "OOIL",
                 20,
                 Arrays.asList(
-                        new Employee(1, 28, "male", "OOCL1", 1000),
-                        new Employee(2, 28, "male", "OOCL2", 1000),
-                        new Employee(3, 28, "male", "OOCL3", 1000)
+                        new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                        new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                        new Employee(3, 28, "male", "OOCL3", 1000, 1)
                 )
         );
         //when

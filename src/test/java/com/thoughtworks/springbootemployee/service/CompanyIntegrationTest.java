@@ -1,6 +1,5 @@
 package com.thoughtworks.springbootemployee.service;
 
-import com.thoughtworks.springbootemployee.Exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -38,9 +37,9 @@ public class CompanyIntegrationTest {
     void should_return_companies_when_find_all_companies_given_null() throws Exception {
         //given
         List<Employee> employees = Arrays.asList(
-                new Employee(1, 28, "male", "OOCL1", 1000),
-                new Employee(2, 28, "male", "OOCL2", 1000),
-                new Employee(3, 28, "male", "OOCL3", 1000)
+                new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                new Employee(3, 28, "male", "OOCL3", 1000, 1)
         );
         Company company = new Company(
                 1,
@@ -65,9 +64,9 @@ public class CompanyIntegrationTest {
         //given
         Integer id = 1;
         List<Employee> employees = Arrays.asList(
-                new Employee(1, 28, "male", "OOCL1", 1000),
-                new Employee(2, 28, "male", "OOCL2", 1000),
-                new Employee(3, 28, "male", "OOCL3", 1000)
+                new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                new Employee(3, 28, "male", "OOCL3", 1000, 1)
         );
         Company company = new Company(
                 1,
@@ -91,9 +90,9 @@ public class CompanyIntegrationTest {
         //given
         Integer id = 1;
         List<Employee> employees = Arrays.asList(
-                new Employee(1, 28, "male", "OOCL1", 1000),
-                new Employee(2, 28, "male", "OOCL2", 1000),
-                new Employee(3, 28, "male", "OOCL3", 1000)
+                new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                new Employee(3, 28, "male", "OOCL3", 1000, 1)
         );
         Company company = new Company(
                 1,
@@ -115,9 +114,9 @@ public class CompanyIntegrationTest {
     void should_return_companies_when_page_query_given_page_and_page_size() throws Exception {
         //given
         List<Employee> employees = Arrays.asList(
-                new Employee(1, 28, "male", "OOCL1", 1000),
-                new Employee(2, 28, "male", "OOCL2", 1000),
-                new Employee(3, 28, "male", "OOCL3", 1000)
+                new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                new Employee(3, 28, "male", "OOCL3", 1000, 1)
         );
         Company company = new Company(
                 1,
@@ -161,9 +160,9 @@ public class CompanyIntegrationTest {
     void should_return_company_when_update_company_information_given_id_and_company_information() throws Exception {
         //given
         List<Employee> employees = Arrays.asList(
-                new Employee(1, 28, "male", "OOCL1", 1000),
-                new Employee(2, 28, "male", "OOCL2", 1000),
-                new Employee(3, 28, "male", "OOCL3", 1000)
+                new Employee(1, 28, "male", "OOCL1", 1000, 1),
+                new Employee(2, 28, "male", "OOCL2", 1000, 1),
+                new Employee(3, 28, "male", "OOCL3", 1000, 1)
         );
         Company company = new Company(
                 1,
@@ -197,12 +196,12 @@ public class CompanyIntegrationTest {
         //given
         Integer id = 1;
         List<Employee> employees = Arrays.asList(
-                new Employee(1, 28, "male", "OOCL1", 1000),
-                new Employee(2, 28, "male", "OOCL2", 1000),
-                new Employee(3, 28, "male", "OOCL3", 1000)
+                new Employee(1, 28, "male", "OOCL1", 1000, 2),
+                new Employee(2, 28, "male", "OOCL2", 1000, 2),
+                new Employee(3, 28, "male", "OOCL3", 1000, 2)
         );
         Company company = new Company(
-                1,
+                2,
                 "OOCL",
                 1,
                 employees

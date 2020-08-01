@@ -12,11 +12,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class CompanyMapperTest {
+    private CompanyMapper companyMapper;
+    @BeforeEach
+    void initMapper() {
+        companyMapper = new CompanyMapper();
+    }
 
     @Test
     void should_return_company_when_map_company_given_company_request() {
         //given
-        CompanyMapper companyMapper = new CompanyMapper();
         CompanyRequest companyRequest = new CompanyRequest(1, "OOCL", 0, new ArrayList<>());
 
         //when

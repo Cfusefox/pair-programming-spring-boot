@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.Exception.IllegalOperationException;
+import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyServiceImpl;
@@ -92,7 +94,7 @@ public class CompanyController {
     }
 
     @GetMapping
-    public List<Company> getAllCompanies() {
+    public List<Company> getAllCompanies() throws NoSuchDataException {
         return companyService.getCompanyList();
     }
 
@@ -102,28 +104,28 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}/employees")
-    public List<Employee> getEmployeesByCompanyId(@PathVariable int id) {
+    public List<Employee> getEmployeesByCompanyId(@PathVariable int id) throws NoSuchDataException {
         return companyService.findEmployeesByCompanyId(id);
     }
 
     @GetMapping(params = {"page", "pageSize"})
-    public Page<Company> getCompaniesByPage(int page, int pageSize) {
+    public Page<Company> getCompaniesByPage(int page, int pageSize) throws NoSuchDataException {
         return companyService.getCompaniesByPage(page, pageSize);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Company addCompany(@RequestBody Company newCompany) {
+    public Company addCompany(@RequestBody Company newCompany) throws IllegalOperationException {
         return companyService.addCompany(newCompany);
     }
 
     @PutMapping("/{id}")
-    public Company updateCompanyByID(@PathVariable int id, @RequestBody Company newCompany) {
+    public Company updateCompanyByID(@PathVariable int id, @RequestBody Company newCompany) throws IllegalOperationException {
         return companyService.updateCompanyByID(id,newCompany);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAllEmployeesOfTheCompanyByID(@PathVariable int id) {
+    public void deleteAllEmployeesOfTheCompanyByID(@PathVariable int id) throws IllegalOperationException {
         companyService.deleteCompanyByID(id);
     }
 }

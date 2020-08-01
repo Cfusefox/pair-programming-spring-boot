@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.Exception.IllegalOperationException;
+import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -21,7 +23,7 @@ public class CompanyServiceTest {
     private CompanyRepository repository = mock(CompanyRepository.class);
     private CompanyServiceImpl companyService = new CompanyServiceImpl(repository);
     @Test
-    void should_return_companies_when_get() {
+    void should_return_companies_when_get() throws NoSuchDataException {
         //given
         List<Company> mockedCompanies = new ArrayList<>();
         mockedCompanies.add(new Company(1,
@@ -80,7 +82,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_companies_when_query_by_page_given_page_and_page_size() {
+    void should_return_companies_when_query_by_page_given_page_and_page_size() throws NoSuchDataException {
         //given
         int page = 1;
         int pageSize = 2;
@@ -113,7 +115,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_employees_when_get_given_companyId() {
+    void should_return_employees_when_get_given_companyId() throws NoSuchDataException {
         //given
         Integer id = 1;
         when(repository.findById(id)).thenReturn(java.util.Optional.of(new Company(1,
@@ -132,7 +134,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_company_when_add_companies_given_company() {
+    void should_return_company_when_add_companies_given_company() throws IllegalOperationException {
         //given
         Company company = new Company(1,
                 "OOCL",
@@ -151,7 +153,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_updated_company_when_update_company_given_company() {
+    void should_return_updated_company_when_update_company_given_company() throws IllegalOperationException {
         //given
         Company company = new Company(1,
                 "OOCL",
@@ -181,7 +183,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_deleted_company_when_delete_company_given_company_id() {
+    void should_return_deleted_company_when_delete_company_given_company_id() throws IllegalOperationException {
         //given
         Company company = new Company(1,
                 "OOCL",

@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
@@ -20,7 +21,7 @@ public class EmployeeServiceTest {
     private EmployeeServiceImpl employeeService = new EmployeeServiceImpl(repository);
 
     @Test
-    void should_return_employees_when_get() {
+    void should_return_employees_when_get() throws NoSuchDataException {
         //given
         List<Employee> mockedEmployees = new ArrayList<>();
         mockedEmployees.add(new Employee(1, 28, "male", "Draymond1", 1000));
@@ -38,7 +39,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_employee_when_get_given_employeeId() {
+    void should_return_employee_when_get_given_employeeId() throws NoSuchDataException {
         //given
         Integer id = 1;
         when(repository.findById(id)).thenReturn(java.util.Optional.of(new Employee(1, 28, "male", "Draymond1", 1000)));
@@ -49,7 +50,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_employees_when_query_by_page_given_page_and_page_size() {
+    void should_return_employees_when_query_by_page_given_page_and_page_size() throws NoSuchDataException {
         //given
         int page = 1;
         int pageSize = 5;
@@ -69,7 +70,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_employees_when_query_by_gender_given_gender() {
+    void should_return_employees_when_query_by_gender_given_gender() throws NoSuchDataException {
         //given
         String gender = "male";
         List<Employee> mockedEmployees = new ArrayList<>();
@@ -96,7 +97,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_updated_employee_when_update_employee_given_employee() {
+    void should_return_updated_employee_when_update_employee_given_employee() throws NoSuchDataException {
         //given
         Employee employee = new Employee(6, 28, "male", "Draymond6", 20);
         when(repository.save(employee)).thenReturn(employee);
@@ -108,7 +109,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_deleted_employee_when_delete_employee_given_employee_id() {
+    void should_return_deleted_employee_when_delete_employee_given_employee_id() throws NoSuchDataException {
         //given
         EmployeeRepository mockEmployeeReposition = mock(EmployeeRepository.class);
         EmployeeServiceImpl employeeService = new EmployeeServiceImpl(mockEmployeeReposition);

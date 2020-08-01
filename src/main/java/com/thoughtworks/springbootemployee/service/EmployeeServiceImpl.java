@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.BeanUtils;
@@ -19,23 +20,39 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getEmployeeList() {
-        return repository.findAll();
+    public List<Employee> getEmployeeList() throws NoSuchDataException {
+        List<Employee> employees = repository.findAll();
+        if (employees.isEmpty()) {
+            throw new NoSuchDataException();
+        }
+        return employees;
     }
 
     @Override
-    public Employee getEmployeeById(Integer id) {
-        return repository.findById(id).orElse(null);
+    public Employee getEmployeeById(Integer id) throws NoSuchDataException {
+        Employee employee = repository.findById(id).orElse(null);
+        if(employee == null) {
+            throw new NoSuchDataException();
+        }
+        return employee;
     }
 
     @Override
-    public Page<Employee> getEmployeeByPage(int page, int pageSize) {
-        return repository.findAll(PageRequest.of(page, pageSize));
+    public Page<Employee> getEmployeeByPage(int page, int pageSize) throws NoSuchDataException {
+        Page<Employee> employees = repository.findAll(PageRequest.of(page, pageSize));
+        if(employees.isEmpty()) {
+            throw new NoSuchDataException();
+        }
+        return employees;
     }
 
     @Override
-    public List<Employee> getEmployeeByGender(String gender) {
-        return repository.findByGender(gender);
+    public List<Employee> getEmployeeByGender(String gender) throws NoSuchDataException {
+        List<Employee> employees = repository.findByGender(gender);
+        if(employees.isEmpty()) {
+            throw new NoSuchDataException();
+        }
+        return employees;
     }
 
     @Override
@@ -44,24 +61,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployeeByID(Integer id, Employee newEmployee) {
+    public Employee updateEmployeeByID(Integer id, Employee newEmployee) throws NoSuchDataException {
         Employee employee = this.getEmployeeById(id);
-        if (employee != null) {
-            BeanUtils.copyProperties(newEmployee, employee);
-            return repository.save(employee);
-        } else {
-            return null;
-        }
+        BeanUtils.copyProperties(newEmployee, employee);
+        return repository.save(employee);
+
     }
 
     @Override
-    public Boolean deleteEmployeeByID(Integer id) {
+    public Boolean deleteEmployeeByID(Integer id) throws NoSuchDataException {
         Employee employee = this.getEmployeeById(id);
-        if (employee == null) {
-            return false;
-        } else {
-            repository.deleteById(id);
-            return true;
-        }
+        repository.deleteById(id);
+        return true;
     }
 }

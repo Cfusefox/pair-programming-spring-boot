@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.Exception.IllegalOperationException;
+import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CompanyServiceImpl implements CompanyService{
+public class CompanyServiceImpl implements CompanyService {
     private CompanyRepository repository;
 
     public CompanyServiceImpl(CompanyRepository repository) {
@@ -19,8 +21,12 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
-    public List<Company> getCompanyList() {
-        return repository.findAll();
+    public List<Company> getCompanyList() throws NoSuchDataException {
+        List<Company> companies = repository.findAll();
+        if (companies.isEmpty()) {
+            throw new NoSuchDataException();
+        }
+        return companies;
     }
 
     @Override
@@ -29,22 +35,34 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
-    public List<Employee> findEmployeesByCompanyId(Integer id) {
-        return findById(id).getEmployees();
+    public List<Employee> findEmployeesByCompanyId(Integer id) throws NoSuchDataException {
+        List<Employee> employees = findById(id).getEmployees();
+        if(employees == null || employees.isEmpty()) {
+            throw new NoSuchDataException();
+        }
+        return employees;
     }
 
     @Override
-    public Page<Company> getCompaniesByPage(int page, int pageSize) {
-        return repository.findAll(PageRequest.of(page, pageSize));
+    public Page<Company> getCompaniesByPage(int page, int pageSize) throws NoSuchDataException {
+        Page<Company> companies = repository.findAll(PageRequest.of(page, pageSize));
+        if(companies.isEmpty()) {
+            throw new NoSuchDataException();
+        }
+        return companies;
     }
 
     @Override
-    public Company addCompany(Company company) {
-        return repository.save(company);
+    public Company addCompany(Company company) throws IllegalOperationException {
+        Company addedCompany = repository.save(company);
+        if(addedCompany.getId() == 0) {
+            throw new IllegalOperationException();
+        }
+        return addedCompany;
     }
 
     @Override
-    public Company updateCompanyByID(Integer id, Company newCompany) {
+    public Company updateCompanyByID(Integer id, Company newCompany) throws IllegalOperationException {
         Company company = this.findById(id);
         if (company != null) {
             company.setEmployees(newCompany.getEmployees());
@@ -52,18 +70,18 @@ public class CompanyServiceImpl implements CompanyService{
             company.setEmployeeNumber(newCompany.getEmployeeNumber());
             return repository.save(company);
         } else {
-            return null;
+            throw new IllegalOperationException();
         }
     }
 
     @Override
-    public Boolean deleteCompanyByID(Integer id) {
+    public Boolean deleteCompanyByID(Integer id) throws IllegalOperationException {
         Company company = this.findById(id);
         if (company != null) {
             repository.deleteById(id);
             return true;
         } else {
-            return false;
+            throw new IllegalOperationException();
         }
     }
 }

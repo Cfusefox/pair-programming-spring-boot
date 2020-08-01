@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.data.domain.Page;
@@ -31,22 +32,22 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<Employee> getEmployeeList() {
+    public List<Employee> getEmployeeList() throws NoSuchDataException {
         return employeeService.getEmployeeList();
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployeeByID(@PathVariable int id) {
+    public Employee getEmployeeByID(@PathVariable int id) throws NoSuchDataException {
         return employeeService.getEmployeeById(id);
     }
 
     @GetMapping(params = {"page", "pageSize"})
-    public Page<Employee> getEmployeeListByPage(int page, int pageSize) {
+    public Page<Employee> getEmployeeListByPage(int page, int pageSize) throws NoSuchDataException {
         return employeeService.getEmployeeByPage(page, pageSize);
     }
 
     @GetMapping(params = {"gender"})
-    public List<Employee> getEmployeeByGender(String gender) {
+    public List<Employee> getEmployeeByGender(String gender) throws NoSuchDataException {
         return employeeService.getEmployeeByGender(gender);
     }
 
@@ -57,12 +58,12 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public Employee updateEmployeeByID(@PathVariable int id, @RequestBody Employee newEmployee) {
+    public Employee updateEmployeeByID(@PathVariable int id, @RequestBody Employee newEmployee) throws NoSuchDataException {
         return employeeService.updateEmployeeByID(id, newEmployee);
     }
 
     @DeleteMapping("/{id}")
-    public Boolean deleteEmployeeByID(@PathVariable int id) {
+    public Boolean deleteEmployeeByID(@PathVariable int id) throws NoSuchDataException {
         return employeeService.deleteEmployeeByID(id);
     }
 }

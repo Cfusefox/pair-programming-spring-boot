@@ -208,7 +208,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_true_when_find_company_by_id_given_incorrect_id() {
+    void should_throw_exception_when_find_company_by_id_given_incorrect_id() {
         //given
         CompanyService companyService = new CompanyServiceImpl(repository);
 
@@ -220,5 +220,23 @@ public class CompanyServiceTest {
         assertEquals(NoSuchDataException.class, exception.getClass());
     }
 
+    @Test
+    void should_throw_exception_when_update_company_information_given_illegal_operation() {
+        Company updateCompany = new Company(1,
+                "OOIL",
+                20,
+                Arrays.asList(
+                        new Employee(1, 28, "male", "OOCL1", 1000),
+                        new Employee(2, 28, "male", "OOCL2", 1000),
+                        new Employee(3, 28, "male", "OOCL3", 1000)
+                )
+        );
+        //when
 
+        Throwable exception = assertThrows(IllegalOperationException.class,
+                () -> companyService.updateCompanyByID(2, updateCompany));
+
+        //then
+        assertEquals(IllegalOperationException.class, exception.getClass());
+    }
 }

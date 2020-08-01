@@ -67,10 +67,10 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company updateCompanyByID(Integer id, Company newCompany) throws IllegalOperationException, NoSuchDataException {
-        Company company = this.findById(id);
         if(id != newCompany.getId()) {
             throw new IllegalOperationException();
         }
+        Company company = this.findById(id);
         if (company != null) {
             company.setEmployees(newCompany.getEmployees());
             company.setCompanyName(newCompany.getCompanyName());

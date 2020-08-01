@@ -15,6 +15,9 @@ public class EmployeeResponse {
         this.salary = salary;
     }
 
+    public EmployeeResponse() {
+    }
+
     public Integer getId() {
         return id;
     }

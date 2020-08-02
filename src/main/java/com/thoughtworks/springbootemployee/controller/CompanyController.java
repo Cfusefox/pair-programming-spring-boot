@@ -27,7 +27,7 @@ public class CompanyController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Company> getAllCompanies() throws NoSuchDataException {
+    public List<CompanyResponse> getAllCompanies() throws NoSuchDataException {
         return companyService.getCompanyList();
     }
 

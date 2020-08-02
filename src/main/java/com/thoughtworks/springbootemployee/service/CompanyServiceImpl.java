@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyServiceImpl {
@@ -23,12 +24,12 @@ public class CompanyServiceImpl {
         this.repository = repository;
     }
 
-    public List<Company> getCompanyList() throws NoSuchDataException {
+    public List<CompanyResponse> getCompanyList() throws NoSuchDataException {
         List<Company> companies = repository.findAll();
         if (companies.isEmpty()) {
             throw new NoSuchDataException();
         }
-        return companies;
+        return companies.stream().map(company -> companyMapper.mapCompanyResponse(company)).collect(Collectors.toList());
     }
 
     public CompanyResponse findById(Integer id) throws NoSuchDataException {

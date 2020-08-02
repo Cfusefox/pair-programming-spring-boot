@@ -3,7 +3,9 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.Exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
+import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class CompanyServiceImpl {
     private CompanyRepository repository;
     private CompanyMapper companyMapper = new CompanyMapper();
+    private EmployeeMapper employeeMapper = new EmployeeMapper();
 
     public CompanyServiceImpl(CompanyRepository repository) {
         this.repository = repository;
@@ -40,12 +43,12 @@ public class CompanyServiceImpl {
         return companyMapper.mapCompanyResponse(company);
     }
 
-    public List<Employee> findEmployeesByCompanyId(Integer id) throws NoSuchDataException {
+    public List<EmployeeResponse> findEmployeesByCompanyId(Integer id) throws NoSuchDataException {
         List<Employee> employees = findById(id).getEmployees();
         if(employees == null || employees.isEmpty()) {
             throw new NoSuchDataException();
         }
-        return employees;
+        return employees.stream().map(employee -> employeeMapper.mapEmployeeResponse(employee)).collect(Collectors.toList());
     }
 
     public Page<Company> getCompaniesByPage(int page, int pageSize) throws NoSuchDataException {

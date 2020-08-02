@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.Exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.dto.CompanyRequest;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
@@ -39,7 +40,7 @@ public class CompanyController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}/employees")
-    public List<Employee> getEmployeesByCompanyId(@PathVariable int id) throws NoSuchDataException {
+    public List<EmployeeResponse> getEmployeesByCompanyId(@PathVariable int id) throws NoSuchDataException {
         return companyService.findEmployeesByCompanyId(id);
     }
 

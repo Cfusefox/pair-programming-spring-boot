@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.Exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.Exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
@@ -62,7 +63,7 @@ public class CompanyServiceTest {
         when(repository.findAll()).thenReturn(mockedCompanies);
 
         //when
-        List<Company> companies = companyService.getCompanyList();
+        List<CompanyResponse> companies = companyService.getCompanyList();
 
         //then
         Assertions.assertEquals(3, companies.size());
@@ -134,7 +135,7 @@ public class CompanyServiceTest {
                 )
         )));
         //when
-        List<Employee> employees= companyService.findEmployeesByCompanyId(id);
+        List<EmployeeResponse> employees= companyService.findEmployeesByCompanyId(id);
         //then
         Assertions.assertEquals(3, employees.size());
     }

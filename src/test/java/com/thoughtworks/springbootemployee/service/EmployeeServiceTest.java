@@ -34,7 +34,7 @@ public class EmployeeServiceTest {
         mockedEmployees.add(new Employee(6, 28, "male", "Draymond6", 20, 1));
         when(repository.findAll()).thenReturn(mockedEmployees);
         //when
-        List<Employee> employees = employeeService.getEmployeeList();
+        List<EmployeeResponse> employees = employeeService.getEmployeeList();
 
         //then
         Assertions.assertEquals(6, employees.size());

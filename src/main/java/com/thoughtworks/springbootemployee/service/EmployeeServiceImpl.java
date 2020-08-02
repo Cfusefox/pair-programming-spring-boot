@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl {
@@ -22,12 +23,12 @@ public class EmployeeServiceImpl {
         this.repository = repository;
     }
 
-    public List<Employee> getEmployeeList() throws NoSuchDataException {
+    public List<EmployeeResponse> getEmployeeList() throws NoSuchDataException {
         List<Employee> employees = repository.findAll();
         if (employees.isEmpty()) {
             throw new NoSuchDataException();
         }
-        return employees;
+        return employees.stream().map(employee -> employeeMapper.mapEmployeeResponse(employee)).collect(Collectors.toList());
     }
 
     public EmployeeResponse getEmployeeById(Integer id) throws NoSuchDataException {

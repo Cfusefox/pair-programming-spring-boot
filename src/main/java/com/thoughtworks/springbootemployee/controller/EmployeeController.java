@@ -25,7 +25,7 @@ public class EmployeeController {
 
 
     @GetMapping
-    public List<Employee> getEmployeeList() throws NoSuchDataException {
+    public List<EmployeeResponse> getEmployeeList() throws NoSuchDataException {
         return employeeService.getEmployeeList();
     }
 

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -80,6 +81,7 @@ public class CompanyServiceImpl {
     public Boolean deleteCompanyByID(Integer id) throws IllegalOperationException, NoSuchDataException {
         CompanyResponse company = this.findById(id);
         if (company != null) {
+            company.setEmployees(new ArrayList<>());
             repository.deleteById(id);
             return true;
         } else {

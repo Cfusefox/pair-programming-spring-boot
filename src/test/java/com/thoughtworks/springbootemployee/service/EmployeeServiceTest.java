@@ -82,7 +82,7 @@ public class EmployeeServiceTest {
         mockedEmployees.add(new Employee(4, 28, "male", "Draymond4", 40, 1));
         when(repository.findByGender(gender)).thenReturn(mockedEmployees);
         //when
-        List<Employee> employees = employeeService.getEmployeeByGender(gender);
+        List<EmployeeResponse> employees = employeeService.getEmployeeByGender(gender);
         //then
         Assertions.assertEquals(4, employees.size());
     }

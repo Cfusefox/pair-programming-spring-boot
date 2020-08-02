@@ -40,7 +40,7 @@ public class EmployeeController {
     }
 
     @GetMapping(params = {"gender"})
-    public List<Employee> getEmployeeByGender(String gender) throws NoSuchDataException {
+    public List<EmployeeResponse> getEmployeeByGender(String gender) throws NoSuchDataException {
         return employeeService.getEmployeeByGender(gender);
     }
 

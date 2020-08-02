@@ -47,12 +47,12 @@ public class EmployeeServiceImpl {
         return employees;
     }
 
-    public List<Employee> getEmployeeByGender(String gender) throws NoSuchDataException {
+    public List<EmployeeResponse> getEmployeeByGender(String gender) throws NoSuchDataException {
         List<Employee> employees = repository.findByGender(gender);
         if(employees.isEmpty()) {
             throw new NoSuchDataException();
         }
-        return employees;
+        return employees.stream().map(employee -> employeeMapper.mapEmployeeResponse(employee)).collect(Collectors.toList());
     }
 
     public EmployeeResponse addEmployee(Employee employee) {
